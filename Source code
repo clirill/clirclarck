@@ -1,0 +1,48 @@
+# clirclarck calculator
+
+from tkinter import *
+
+root = Tk()
+root.title("Calculator")
+root.geometry("320x450")
+root.configure(bg="#1c1c1c")
+
+expr = StringVar()
+
+Label(root, text="clirclarck",
+      font=("Arial", 18, "bold"),
+      bg="#1c1c1c", fg="white").pack(pady=(10,0))
+
+def press(x):
+    expr.set(expr.get() + str(x))
+
+def calc():
+    try: expr.set(eval(expr.get()))
+    except: expr.set("Error")
+
+def clear():
+    expr.set("")
+
+Entry(root, textvariable=expr, font=("Arial", 24),
+      bg="#2d2d2d", fg="white", bd=0,
+      justify="right").pack(fill="x", padx=10, pady=10, ipady=15)
+
+buttons = [
+    ["7","8","9","/"],
+    ["4","5","6","*"],
+    ["1","2","3","-"],
+    ["C","0","=","+"]
+]
+
+for row in buttons:
+    f = Frame(root, bg="#1c1c1c")
+    f.pack(expand=True, fill="both")
+    for b in row:
+        cmd = clear if b=="C" else calc if b=="=" else lambda x=b: press(x)
+        Button(f, text=b, command=cmd,
+               font=("Arial",18),
+               bg="#3a3a3a", fg="white",
+               activebackground="#555",
+               bd=0).pack(side="left", expand=True, fill="both", padx=2, pady=2)
+
+root.mainloop()
